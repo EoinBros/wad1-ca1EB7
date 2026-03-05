@@ -3,6 +3,9 @@
 import logger from '../utils/logger.js';
 import playlistStore from '../models/playlist-store.js';
 
+// playlist controller displays details for a single playlist
+// accessed via the /playlist/:id route
+
 const playlist = {
   createView(request, response) {
     const playlistId = request.params.id;

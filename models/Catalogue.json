@@ -4,27 +4,27 @@
     "name": "Supreme T-Shirt",
     "price": "$40",
     "description": "Supreme T-Shirt",
-    "image": "images/tshirt.webp"
+    "image": "/tshirt.webp"
   },
   {
     "id": 2,
     "name": "Denim Jacket",
     "price": "$150",
     "description": "Ducati X supreme jacket",
-    "image": "images/jacket.jpeg"
+    "image": "/jacket.jpeg"
   },
   {
     "id": 3,
     "name": "Sneakers",
     "price": "$200",
     "description": "Neon 95s",
-    "image": "images/sneakers.jpeg"
+    "image": "/sneakers.jpeg"
   },
   {
     "id": 4,
     "name": "Puffer Jacket",
     "price": "$45",
     "description": "Black nocta puffer",
-    "image": "images/puffer.webp"
+    "image": "/puffer.webp"
   }
 ]

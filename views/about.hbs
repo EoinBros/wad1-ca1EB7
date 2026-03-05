@@ -26,3 +26,17 @@
   </div>
   {{/each}}
 </div>
+
+<h2>{{title}} Items</h2>
+<div class="product-list">
+  {{#each products}}
+    <div class="product-row">
+      <div class="product-details">
+        <span class="product-name">{{this.name}}</span>
+        <span class="product-price">{{this.price}}</span><br>
+        <span class="product-desc">{{this.description}}</span>
+      </div>
+    </div>
+  {{/each}}
+</div>
+

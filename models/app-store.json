@@ -1,7 +1,7 @@
 {
   "info": {
-    "appTitle": "Shop Maker",
-    "version": 0.2,
+    "appTitle": "Eoins clothing",
+    "version": 2.2,
     "creators": [
       {
         "name": " Eoin Brosnan",
@@ -12,6 +12,6 @@
         "role": "Web Developer"
       }
     ],
-    "location": "Waterford"
+    "location": "Waterford, Ireland (Cork Road)"
   } 
 }

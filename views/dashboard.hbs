@@ -2,16 +2,26 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Clothing Store Dashboard</title>
+  <title>{{title}}</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  {{> menu id=id}}
   <header>
-    <h1>Welcome to My Clothing Store</h1>
+    <h1>{{title}}</h1>
   </header>
-  
+
   <main>
-    <div id="products-container" class="products-grid"></div>
+    <div id="products-container" class="products-grid">
+      {{#each products}}
+        <div class="product-card">
+          <img src="{{this.image}}" alt="{{this.name}}" class="product-image" />
+          <h3>{{this.name}}</h3>
+          <p>{{this.price}}</p>
+          <p>{{this.description}}</p>
+        </div>
+      {{/each}}
+    </div>
   </main>
 
   <script src="js/main.js"></script>

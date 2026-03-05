@@ -1,0 +1,28 @@
+{{> menu id=id}}
+
+<section class="about-section">
+  <h1>{{title}}</h1>
+  <div class="about-content">
+    <div class="app-info">
+      <table>
+        <tr><td><strong>App Name</strong></td><td>{{info.appTitle}}</td></tr>
+        <tr><td><strong>Version</strong></td><td>{{info.version}}</td></tr>
+        <tr><td><strong>Location</strong></td><td>{{info.location}}</td></tr>
+      </table>
+      <h2>Created by</h2>
+      <!-- custom creator card for Eoin Brosnan -->
+      <div class="creator creator-large">
+        <img src="/batman.jpg" alt="Eoin Brosnan" class="creator-avatar" />
+        <div class="creator-details">
+          <strong>Eoin Brosnan</strong><br>
+          Joined in 2025<br>
+          Web App Developer living in Ireland<br>
+          44 contacts
+        </div>
+      </div>
+    </div>
+    <div class="map-container">
+      <img src="/location.jpg" alt="Cork Road, Waterford" style="width:100%;height:auto;border:0;" />
+    </div>
+  </div>
+</section>
