@@ -1,35 +1,19 @@
-{{> menu id="dashboard"}}
-
-<section class="ui left aligned middle aligned segment">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Clothing Store Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <h1>Welcome to My Clothing Store</h1>
+  </header>
   
-  <h2>Playlist App Dashboard</h2>
-  
-  {{#unless playlists}}
-    <h3 class="ui message">
-      Start adding your playlists!
-    </h3>
-  {{/unless}}
+  <main>
+    <div id="products-container" class="products-grid"></div>
+  </main>
 
-  {{#each playlists}}
-    <section class="ui left aligned middle aligned segment">
-
-      <h3 class="ui header">
-        {{title}}
-      </h3>
-
-      <p>
-        {{#if songs.length}}
-          Total songs: {{songs.length}}
-        {{else}}
-          Empty Playlist!
-        {{/if}}
-      </p>
-
-      <a href="/playlist/{{id}}">
-        <i class="folder open black icon"></i>
-      </a>
-
-    </section>
-  {{/each}}
-
-</section>
+  <script src="js/main.js"></script>
+</body>
+</html>
