@@ -1,11 +1,69 @@
 {{> menu}}
 
 <section class="ui center aligned middle aligned segment">
-  
-  <h2>Eoins app</h2>
+  <h2>Welcome to my clothing store!</h2>
+    <p>
+      This app will allow users browse items from my store.
+    </p>
 
-  <p>
-    You can use this start view (along with the matching start controller and start route) as the starting point for your "welcome" view (i.e. your app's homepage). Read the assignment spec to see what other views you should add.
-  </p>
+    <img src = "/shop.jpg" class = "ui centered image">
+
+     <div class="ui five statistics" style="margin-top: 1em;">
+    
+  {{#with info}}
+     
+    <div class="statistic">
+      <div class="value">
+        <i class="music icon"></i> 
+      </div>
+      <div class="label">
+        App Title: <br>
+        {{appTitle}}
+      </div>
+    </div>
+    
+    <div class="statistic">
+      <div class="value">
+        <i class="code branch icon"></i> 
+      </div>
+      <div class="label">
+        App Version: <br>
+        Version {{version}}
+      </div>
+    </div> 
+     
+    <div class="statistic">
+      <div class="value">
+        <i class="map pin icon"></i> 
+      </div>
+      <div class="label">
+        Made in: <br>
+        {{location}}
+      </div>
+    </div> 
+	
+    <div class="statistic">
+      <div class="value">
+        <i class="user icon"></i> 
+      </div>
+      <div class="label">
+        Created by: <br>
+        {{creators.0.name}}
+      </div>
+    </div>
+	
+    <div class="statistic">
+      <div class="value">
+        <i class="user plus icon"></i> 
+      </div>
+      <div class="label">
+        With help from: <br>
+        {{creators.1.name}}
+      </div>
+    </div>
+	
+  {{/with}}
+  
+</div>
 
 </section>

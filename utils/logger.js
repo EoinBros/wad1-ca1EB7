@@ -9,5 +9,5 @@ logger.level = 'debug';
 if (process.env.LEVEL) {
   logger.level = process.env.LEVEL;
 }
-
+  
 export default logger;

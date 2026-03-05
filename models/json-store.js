@@ -69,4 +69,3 @@ class JsonStore {
 }
 
 export default JsonStore;
-

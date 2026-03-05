@@ -1,23 +1,26 @@
 {
-  "name": "ca1-app",
-  "version": "1.0.0",
-  "description": "CA1 starter app",
+  "name": "playlist-app",
+  "version": "0.0.1",
+  "description": "\"A little playlist maker\"",
   "type": "module",
   "main": "server.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js"
   },
   "keywords": [
     "node",
     "express"
   ],
+  "author": "Mary",
+  "license": "ISC",
   "dependencies": {
-    "express": "^5.2.1",
-    "express-handlebars": "^8.0.4",
+    "express": "^5.1.0",
+    "express-handlebars": "^8.0.6",
     "lowdb": "^7.0.1",
-    "winston": "^3.19.0"
+    "winston": "^3.18.3"
   },
   "devDependencies": {
-    "nodemon": "^3.1.11"
+    "nodemon": "^3.1.10"
   }
 }

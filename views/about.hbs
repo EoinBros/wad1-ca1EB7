@@ -1,0 +1,28 @@
+{{> menu id="about"}}
+
+<h1>{{title}}</h1>
+
+<div class="ui three stackable cards">
+  {{#each employee}}
+  <div class="ui centered card">
+    <div class="image">
+      <img src="{{this.image}}" alt="{{this.name}}">
+    </div>
+    <div class="content">
+      <a class="header">{{this.fullname}}</a>
+      <div class="meta">
+        <span class="date">Joined in {{this.joined}}</span>
+      </div>
+      <div class="description">
+        {{this.name}} is a {{this.job}} living in {{this.city}}.
+      </div>
+    </div>
+    <div class="extra content">
+      <a>
+        <i class="user icon"></i>
+        {{this.mates}} contacts
+      </a>
+    </div>
+  </div>
+  {{/each}}
+</div>
