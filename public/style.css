@@ -56,6 +56,38 @@ nav.ui.stackable.menu .header.item a {
   justify-content: center;
 }
 
+/* category headings in catalogue */
+.category-section {
+  margin: 2em 0;
+  text-align: center;
+  width: 100%;
+}
+.category-title {
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+  text-transform: capitalize;
+}
+
+/* navigation within catalogue page */
+.category-nav {
+  margin: 1em 0;
+  text-align: center;
+}
+.category-link {
+  margin: 0 0.5em;
+  padding: 0.3em 0.6em;
+  background: #007acc;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  text-transform: capitalize;
+}
+.category-link:hover {
+  background: #005a9c;
+}
+
+/* store front footer */
+
 /* about page product list styles */
 .product-list {
   display: flex;
@@ -82,6 +114,13 @@ nav.ui.stackable.menu .header.item a {
 
 .product-price {
   color: #555;
+}
+
+.category-heading {
+  font-size: 1.3em;
+  margin-top: 1.5em;
+  text-transform: capitalize;
+  color: #333;
 }
 
 /* Contact/about page layout */

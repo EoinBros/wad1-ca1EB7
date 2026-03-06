@@ -11,18 +11,33 @@
     <h1>{{title}}</h1>
   </header>
 
-  <main>
-    <div id="products-container" class="products-grid">
-      {{#each products}}
-        <div class="product-card">
-          <img src="{{this.image}}" alt="{{this.name}}" class="product-image" />
-          <h3>{{this.name}}</h3>
-          <p>{{this.price}}</p>
-          <p>{{this.description}}</p>
+  {{!-- quick links to each category (navigate to dedicated pages) --}}
+  <nav class="category-nav">
+    {{#each products}}
+      <a href="/category/{{@key}}" class="category-link">{{@key}}</a>
+    {{/each}}
+  </nav>
+
+  <main id="products-container">
+    {{!-- iterate over each category in the products object --}}
+    {{#each products}}
+      <section id="{{@key}}" class="category-section">
+        <h2 class="category-title">{{@key}}</h2>
+        <div class="products-grid">
+          {{#each this}}
+            <div class="product-card">
+              <img src="{{this.image}}" alt="{{this.name}}" class="product-image" />
+              <h3>{{this.name}}</h3>
+              <p>{{this.price}}</p>
+              <p>{{this.description}}</p>
+            </div>
+          {{/each}}
         </div>
-      {{/each}}
-    </div>
+      </section>
+    {{/each}}
   </main>
+
+
 
   <script src="js/main.js"></script>
 </body>

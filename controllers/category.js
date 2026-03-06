@@ -1,28 +1,35 @@
 'use strict';
 
 import logger from '../utils/logger.js';
-import appStore from '../models/app-store.js';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// about controller shows info and product list
-// it reads from the catalogue JSON file to supply product data
+// generic controller for one clothing category (tshirts, jackets, sneakers)
+// reads catalogue and renders dashboard template filtered to that category
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const about = {
-  createView(request, response) {
-    logger.info('About page loading!');
+const VALID_CATEGORIES = new Set(['tshirts', 'jackets', 'sneakers']);
 
-    // load catalogue data so we can list name and price
+const category = {
+  createView(request, response) {
+    const type = request.params.type;
+    if (!VALID_CATEGORIES.has(type)) {
+      // unknown category -> redirect to dashboard
+      logger.warn(`Invalid category requested: ${type}`);
+      return response.redirect('/dashboard');
+    }
+
+    logger.info(`Category page loading (${type})`);
+
     const cataloguePath = path.join(__dirname, '../models/Catalogue.json');
     let products = [];
     try {
       products = JSON.parse(fs.readFileSync(cataloguePath));
 
-      // convert flat list to category object if necessary
+      // normalize flat array if needed
       if (Array.isArray(products)) {
         const grouped = {tshirts: [], jackets: [], sneakers: []};
         products.forEach(item => {
@@ -35,18 +42,22 @@ const about = {
         products = grouped;
       }
     } catch (e) {
-      logger.error('Unable to read catalogue in about controller', e);
+      logger.error('Error reading catalogue for category page', e);
+      products = {tshirts: [], jackets: [], sneakers: []};
     }
 
+    // filter to requested category only
+    const filtered = {};
+    filtered[type] = products[type] || [];
+
     const viewData = {
-      title: 'Collection',
-      employee: appStore.getAppInfo(),
-      products: products,
-      id: 'about'
+      title: `${type.charAt(0).toUpperCase() + type.slice(1)}`,
+      id: type,
+      products: filtered,
     };
 
-    response.render('about', viewData);
+    response.render('dashboard', viewData);
   },
 };
 
-export default about;
+export default category;
