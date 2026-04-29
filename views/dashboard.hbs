@@ -11,34 +11,85 @@
     <h1>{{title}}</h1>
   </header>
 
-  {{!-- quick links to each category (navigate to dedicated pages) --}}
-  <nav class="category-nav">
-    {{#each products}}
-      <a href="/category/{{@key}}" class="category-link">{{@key}}</a>
-    {{/each}}
-  </nav>
-
-  <main id="products-container">
-    {{!-- iterate over each category in the products object --}}
-    {{#each products}}
-      <section id="{{@key}}" class="category-section">
-        <h2 class="category-title">{{@key}}</h2>
-        <div class="products-grid">
-          {{#each this}}
-            <div class="product-card">
-              <img src="{{this.image}}" alt="{{this.name}}" class="product-image" />
-              <h3>{{this.name}}</h3>
-              <p>{{this.price}}</p>
-              <p>{{this.description}}</p>
+  <main id="collections-container">
+    <section class="collections-section">
+      <h2>Collections</h2>
+      
+      <div class="collections-grid">
+        {{#each categories}}
+          <div class="collection-card">
+            <div class="collection-image-wrapper">
+              <img src="{{this.image}}" alt="{{this.displayName}}" class="collection-image" />
             </div>
-          {{/each}}
+            <div class="collection-info">
+              <h3 class="collection-title">{{this.displayName}}</h3>
+              <p class="collection-meta">Items: {{this.itemCount}}</p>
+              <p class="collection-date">Created: {{this.createdDate}}</p>
+            </div>
+            <div class="collection-actions">
+              <a href="/category/{{this.id}}" class="btn btn-view">View Collection</a>
+              <button class="btn btn-delete" onclick="deleteCategory('{{this.id}}')">Delete</button>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </section>
+
+    <section class="add-collection-section">
+      <h2>Add New Collection</h2>
+      <form class="add-collection-form" onsubmit="addCategory(event)">
+        <div class="form-group">
+          <label for="collection-name">Collection Name:</label>
+          <input 
+            type="text" 
+            id="collection-name" 
+            name="collectionName" 
+            placeholder="Enter collection name"
+            required
+          />
         </div>
-      </section>
-    {{/each}}
+        <div class="form-group">
+          <label for="collection-image">Collection Image:</label>
+          <input 
+            type="file" 
+            id="collection-image" 
+            name="collectionImage" 
+            accept="image/*"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Add Collection</button>
+      </form>
+    </section>
   </main>
 
-
+  <footer class="store-footer">
+    <img src="/shop.jpg" alt="Store front" class="store-footer-image" />
+  </footer>
 
   <script src="js/main.js"></script>
+  <script>
+    function deleteCategory(categoryId) {
+      if (confirm(`Are you sure you want to delete the "${categoryId}" collection?`)) {
+        // TODO: Implement delete functionality - send DELETE request to server
+        console.log('Delete collection:', categoryId);
+        alert('Delete functionality to be implemented');
+      }
+    }
+
+    function addCategory(event) {
+      event.preventDefault();
+      const collectionName = document.getElementById('collection-name').value;
+      const collectionImage = document.getElementById('collection-image').files[0];
+      
+      if (!collectionName.trim()) {
+        alert('Please enter a collection name');
+        return;
+      }
+      
+      // TODO: Implement add functionality - send POST request to server
+      console.log('Add collection:', collectionName, collectionImage);
+      alert('Add functionality to be implemented');
+    }
+  </script>
 </body>
 </html>

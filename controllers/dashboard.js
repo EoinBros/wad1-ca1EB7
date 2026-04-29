@@ -18,6 +18,7 @@ const dashboard = {
     // load the catalogue JSON directly
     const cataloguePath = path.join(__dirname, '../models/Catalogue.json');
     let products = [];
+    let categories = [];
     try {
       products = JSON.parse(fs.readFileSync(cataloguePath));
 
@@ -33,18 +34,30 @@ const dashboard = {
         });
         products = grouped;
       }
+
+      // convert products object to array of categories with metadata
+      categories = Object.keys(products).map(categoryName => ({
+        id: categoryName,
+        name: categoryName,
+        displayName: categoryName.charAt(0).toUpperCase() + categoryName.slice(1),
+        items: products[categoryName],
+        itemCount: products[categoryName].length,
+        image: products[categoryName][0]?.image || '/default-image.jpg',
+        createdDate: new Date().toLocaleDateString()
+      }));
     } catch (e) {
       logger.error('Error reading catalogue file', e);
     }
 
     const viewData = {
-      title: "Catalogue",
+      title: "Dashboard",
       id: "dashboard",
+      categories: categories,
       products: products,
       info: appStore.getAppInfo()
     };
 
-    logger.debug(viewData.products);
+    logger.debug(viewData.categories);
 
     response.render('dashboard', viewData);
   },
