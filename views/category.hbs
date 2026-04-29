@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{title}}</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  {{> menu id=id}}
+  <header>
+    <h1>{{title}}</h1>
+  </header>
+
+  <main id="category-container">
+    <section class="items-section">
+      <div class="table-wrapper">
+        <table class="items-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Description</th>
+              <th>Image</th>
+              <th>Edit</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each items}}
+              <tr class="item-row" data-id="{{this.id}}">
+                <td class="item-name">{{this.name}}</td>
+                <td class="item-price">{{this.price}}</td>
+                <td class="item-description">{{this.description}}</td>
+                <td class="item-image-cell">
+                  <img src="{{this.image}}" alt="{{this.name}}" class="table-item-image" />
+                </td>
+                <td class="item-actions">
+                  <button class="btn-icon btn-edit" onclick="openEditRow({{this.id}}, '{{this.name}}', '{{this.price}}', '{{this.description}}', '{{this.image}}')" title="Edit">
+                    <span>✏️</span>
+                  </button>
+                </td>
+                <td class="item-actions">
+                  <button class="btn-icon btn-delete-icon" onclick="deleteItem({{this.id}})" title="Delete">
+                    <span>🗑️</span>
+                  </button>
+                </td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="add-row-section">
+        <table class="add-item-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Description</th>
+              <th>Image</th>
+              <th colspan="2"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="text" id="new-name" placeholder="Name" /></td>
+              <td><input type="text" id="new-price" placeholder="Price" /></td>
+              <td><input type="text" id="new-description" placeholder="Description" /></td>
+              <td><input type="text" id="new-image" placeholder="Image URL" /></td>
+              <td colspan="2" class="add-btn-cell">
+                <button class="btn btn-add" onclick="addItem()">Add Item</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Edit Row Modal -->
+  <div id="edit-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeEditRow()">&times;</span>
+      <h2>Edit Item</h2>
+      <form onsubmit="submitEditRow(event)" class="edit-form">
+        <div class="form-group">
+          <label for="edit-name">Name:</label>
+          <input type="text" id="edit-name" required />
+        </div>
+        <div class="form-group">
+          <label for="edit-price">Price:</label>
+          <input type="text" id="edit-price" required />
+        </div>
+        <div class="form-group">
+          <label for="edit-description">Description:</label>
+          <input type="text" id="edit-description" required />
+        </div>
+        <div class="form-group">
+          <label for="edit-image">Image URL:</label>
+          <input type="text" id="edit-image" required />
+        </div>
+        <div class="modal-actions">
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+          <button type="button" class="btn btn-cancel" onclick="closeEditRow()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer class="store-footer">
+    <img src="/shop.jpg" alt="Store front" class="store-footer-image" />
+  </footer>
+
+  <script>
+    const categoryType = '{{id}}';
+    let currentEditingId = null;
+
+    function addItem() {
+      const name = document.getElementById('new-name').value.trim();
+      const price = document.getElementById('new-price').value.trim();
+      const description = document.getElementById('new-description').value.trim();
+      const image = document.getElementById('new-image').value.trim();
+
+      if (!name || !price || !description || !image) {
+        alert('Please fill in all fields');
+        return;
+      }
+
+      const newItem = {
+        name: name,
+        price: price,
+        description: description,
+        image: image
+      };
+
+      fetch(`/category/${categoryType}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newItem)
+      })
+      .then(response => {
+        if (response.ok) {
+          alert('Item added successfully!');
+          location.reload();
+        } else {
+          alert('Error adding item');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Error adding item');
+      });
+    }
+
+    function openEditRow(id, name, price, description, image) {
+      currentEditingId = id;
+      document.getElementById('edit-name').value = name;
+      document.getElementById('edit-price').value = price;
+      document.getElementById('edit-description').value = description;
+      document.getElementById('edit-image').value = image;
+      document.getElementById('edit-modal').style.display = 'block';
+    }
+
+    function closeEditRow() {
+      document.getElementById('edit-modal').style.display = 'none';
+      currentEditingId = null;
+    }
+
+    function submitEditRow(event) {
+      event.preventDefault();
+      const name = document.getElementById('edit-name').value;
+      const price = document.getElementById('edit-price').value;
+      const description = document.getElementById('edit-description').value;
+      const image = document.getElementById('edit-image').value;
+
+      const updatedItem = {
+        name: name,
+        price: price,
+        description: description,
+        image: image
+      };
+
+      fetch(`/category/${categoryType}/${currentEditingId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedItem)
+      })
+      .then(response => {
+        if (response.ok) {
+          alert('Item updated successfully!');
+          location.reload();
+        } else {
+          alert('Error updating item');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Error updating item');
+      });
+    }
+
+    function deleteItem(itemId) {
+      if (confirm('Are you sure you want to delete this item?')) {
+        fetch(`/category/${categoryType}/${itemId}`, {
+          method: 'DELETE'
+        })
+        .then(response => {
+          if (response.ok) {
+            alert('Item deleted successfully!');
+            location.reload();
+          } else {
+            alert('Error deleting item');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Error deleting item');
+        });
+      }
+    }
+
+    // Close modal when clicking outside of it
+    window.onclick = function(event) {
+      const modal = document.getElementById('edit-modal');
+      if (event.target == modal) {
+        modal.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>

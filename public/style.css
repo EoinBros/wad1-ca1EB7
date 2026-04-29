@@ -400,3 +400,288 @@ nav.ui.stackable.menu .header.item a {
   align-self: center;
   width: 100%;
 }
+
+/* Category View Styles */
+#category-container {
+  max-width: 1400px;
+  margin: 2em auto;
+  padding: 0 1em;
+}
+
+.items-section {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  margin-bottom: 2em;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.items-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95em;
+}
+
+.items-table thead {
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.items-table th {
+  padding: 1em;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+}
+
+.items-table tbody tr {
+  border-bottom: 1px solid #dee2e6;
+  transition: background-color 0.2s ease;
+}
+
+.items-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.items-table td {
+  padding: 1em;
+  vertical-align: middle;
+}
+
+.item-name {
+  font-weight: 500;
+  color: #333;
+}
+
+.item-price {
+  color: #007acc;
+  font-weight: 500;
+}
+
+.item-description {
+  color: #666;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-image-cell {
+  text-align: center;
+}
+
+.table-item-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.item-actions {
+  text-align: center;
+  padding: 1em 0.5em;
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 0.5em;
+  transition: transform 0.2s ease;
+}
+
+.btn-icon:hover {
+  transform: scale(1.2);
+}
+
+.btn-edit {
+  color: #ffc107;
+}
+
+.btn-delete-icon {
+  color: #dc3545;
+}
+
+/* Add Item Row Section */
+.add-row-section {
+  background: white;
+  border-top: 2px solid #dee2e6;
+  padding: 1.5em;
+}
+
+.add-item-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0;
+}
+
+.add-item-table thead {
+  background-color: transparent;
+}
+
+.add-item-table th {
+  padding: 0.5em;
+  text-align: left;
+  font-weight: 600;
+  color: #666;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.add-item-table input {
+  width: 100%;
+  padding: 0.6em;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.95em;
+  font-family: 'Arial', sans-serif;
+}
+
+.add-item-table input:focus {
+  outline: none;
+  border-color: #007acc;
+  box-shadow: 0 0 4px rgba(0,122,204,0.2);
+}
+
+.add-item-table td {
+  padding: 0.8em 0.5em;
+}
+
+.add-btn-cell {
+  text-align: center;
+  padding: 1em !important;
+}
+
+.btn-add {
+  background-color: #28a745;
+  color: white;
+  padding: 0.7em 2em;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.95em;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.btn-add:hover {
+  background-color: #218838;
+}
+
+/* Edit Form Styles */
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2em;
+}
+
+.edit-form .form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-form label {
+  font-weight: 600;
+  margin-bottom: 0.4em;
+  color: #333;
+}
+
+.edit-form input {
+  padding: 0.7em;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.95em;
+  font-family: 'Arial', sans-serif;
+}
+
+.edit-form input:focus {
+  outline: none;
+  border-color: #007acc;
+  box-shadow: 0 0 4px rgba(0,122,204,0.2);
+}
+
+/* Modal Dialog */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  overflow-y: auto;
+}
+
+.modal-content {
+  background-color: white;
+  margin: 5% auto;
+  padding: 2em;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  width: 90%;
+  max-width: 500px;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  margin-bottom: 1.5em;
+  color: #333;
+  font-size: 1.3em;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 1.5em;
+  font-weight: bold;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.close:hover {
+  color: #000;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 1em;
+  justify-content: center;
+  margin-top: 1.5em;
+}
+
+.btn-cancel {
+  background-color: #6c757d;
+  color: white;
+  padding: 0.7em 2em;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.95em;
+  transition: background-color 0.2s ease;
+}
+
+.btn-cancel:hover {
+  background-color: #5a6268;
+}
+
+.modal .btn-primary {
+  padding: 0.7em 2em;
+  font-size: 0.95em;
+}
