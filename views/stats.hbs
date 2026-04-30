@@ -1,0 +1,82 @@
+{{> menu id=id}}
+
+<section class="stats-page">
+  <div class="stats-hero">
+    <div class="stats-headline">
+      <h1>{{statistics.currentUser.name}}Stats:</h1>
+    </div>
+
+    <div class="stats-card-row">
+      <article class="stat-card stat-card-large">
+        <div class="stat-icon">📁</div>
+        <div class="stat-number">{{statistics.totalCollections}}</div>
+        <div class="stat-label">COLLECTIONS</div>
+      </article>
+
+      <article class="stat-card stat-card-large">
+        <div class="stat-icon">🛍️</div>
+        <div class="stat-number">{{statistics.totalItems}}</div>
+        <div class="stat-label">ITEMS</div>
+      </article>
+
+      <article class="stat-card stat-card-large">
+        <div class="stat-icon">📊</div>
+        <div class="stat-number">{{statistics.averageItemsPerCollection}}</div>
+        <div class="stat-label">AVERAGE ITEMS</div>
+      </article>
+    </div>
+
+    <div class="stats-separator"></div>
+
+    <div class="stats-summary-row">
+      <div class="stats-summary-block">
+        <div class="summary-icon">⬆️</div>
+        <div class="summary-label">COLLECTION W/ MOST ITEMS:</div>
+        <div class="summary-value">{{statistics.largestCollectionName}}</div>
+      </div>
+      <div class="stats-summary-block">
+        <div class="summary-icon">⬇️</div>
+        <div class="summary-label">COLLECTION W/ LEAST ITEMS:</div>
+        <div class="summary-value">{{statistics.smallestCollectionName}}</div>
+      </div>
+    </div>
+
+    <div class="stats-secondary-headline">
+      The catalogue now contains:
+    </div>
+
+    <div class="stats-card-row stats-card-row-center">
+      <article class="stat-card stat-card-medium">
+        <div class="stat-icon">👥</div>
+        <div class="stat-number">{{statistics.totalUsers}}</div>
+        <div class="stat-label">USERS</div>
+      </article>
+
+      <article class="stat-card stat-card-medium">
+        <div class="stat-icon">💾</div>
+        <div class="stat-number">{{statistics.userWithMostCollections.collections}}</div>
+        <div class="stat-label">TOP COLLECTIONS</div>
+        <div class="stat-subtext">{{statistics.userWithMostCollections.name}}</div>
+      </article>
+
+      <article class="stat-card stat-card-medium">
+        <div class="stat-icon">🧮</div>
+        <div class="stat-number">{{statistics.currentUser.collectionsCreated}}</div>
+        <div class="stat-label">CURRENT USER COLLECTIONS</div>
+      </article>
+    </div>
+
+    <div class="stats-summary-row stats-bottom-row">
+      <div class="stats-summary-block">
+        <div class="summary-icon">⬆️</div>
+        <div class="summary-label">USER W/ MOST COLLECTIONS:</div>
+        <div class="summary-value">{{statistics.userWithMostCollections.name}}</div>
+      </div>
+      <div class="stats-summary-block">
+        <div class="summary-icon">⬇️</div>
+        <div class="summary-label">CURRENT USER CONNECTIONS:</div>
+        <div class="summary-value">{{statistics.currentUser.connections}}</div>
+      </div>
+    </div>
+  </div>
+</section>

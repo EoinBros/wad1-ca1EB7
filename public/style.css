@@ -218,6 +218,150 @@ nav.ui.stackable.menu .header.item a {
   border-radius: 4px;
 }
 
+/* Statistics page styles */
+.stats-page {
+  background: #040608;
+  color: white;
+  padding: 2em 1em 3em;
+  border-radius: 20px;
+  margin: 1.5em 0;
+}
+
+.stats-hero {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.stats-headline {
+  text-align: center;
+  margin-bottom: 1.75em;
+}
+
+.stats-headline h1 {
+  margin: 0;
+  font-size: 2em;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+}
+
+.stats-card-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.75em;
+}
+
+.stats-card-row-center {
+  justify-content: center;
+}
+
+.stat-card {
+  flex: 1 1 220px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 18px;
+  padding: 1.5rem;
+  text-align: center;
+  min-width: 220px;
+}
+
+.stat-card-large {
+  min-width: 220px;
+}
+
+.stat-card-medium {
+  min-width: 220px;
+}
+
+.stat-icon {
+  display: inline-flex;
+  width: 78px;
+  height: 78px;
+  border-radius: 22px;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255,255,255,0.08);
+  margin: 0 auto 1rem;
+  font-size: 2.4rem;
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.78);
+}
+
+.stat-subtext {
+  margin-top: 0.8rem;
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.6);
+}
+
+.stats-separator {
+  border-top: 1px solid rgba(255,255,255,0.12);
+  margin: 1.75em 0;
+}
+
+.stats-summary-row {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 1.75em;
+}
+
+.stats-summary-block {
+  flex: 1 1 46%;
+  min-width: 260px;
+  text-align: center;
+}
+
+.summary-icon {
+  display: block;
+  margin: 0 auto 0.75rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  line-height: 48px;
+  font-size: 1.4rem;
+}
+
+.summary-label {
+  font-size: 0.85rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.72);
+  margin-bottom: 0.5rem;
+}
+
+.summary-value {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: white;
+}
+
+.stats-secondary-headline {
+  text-align: center;
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 1.5em;
+}
+
+.stats-bottom-row {
+  justify-content: space-between;
+}
+
 /* Collection Dashboard Styles */
 #collections-container {
   max-width: 1200px;
