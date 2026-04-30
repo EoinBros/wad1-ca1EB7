@@ -1,38 +1,17 @@
 'use strict';
 
 import logger from "../utils/logger.js";
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
 import appStore from '../models/app-store.js';
+import userStore from '../models/user-store.js';
 
 // dashboard controller loads catalogue data and renders the catalogue view
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const CATALOGUE_PATH = path.join(__dirname, '../models/Catalogue.json');
-
-function readCatalogue() {
-  const catalogueData = JSON.parse(fs.readFileSync(CATALOGUE_PATH));
-
-  if (!Array.isArray(catalogueData)) {
-    return catalogueData;
-  }
-
-  const grouped = {tshirts: [], jackets: [], sneakers: []};
-  catalogueData.forEach(item => {
-    const name = item.name.toLowerCase();
-    if (name.includes('shirt')) grouped.tshirts.push(item);
-    else if (name.includes('jacket')) grouped.jackets.push(item);
-    else if (name.includes('sneaker')) grouped.sneakers.push(item);
-    else grouped.tshirts.push(item);
-  });
-
-  return grouped;
+function readUserCatalogue(request) {
+  return userStore.getCatalogue(request.currentUser.id);
 }
 
-function writeCatalogue(catalogue) {
-  fs.writeFileSync(CATALOGUE_PATH, JSON.stringify(catalogue, null, 2));
+function writeUserCatalogue(request, catalogue) {
+  userStore.saveCatalogue(request.currentUser.id, catalogue);
 }
 
 function createCategoryId(categoryName) {
@@ -59,7 +38,7 @@ const dashboard = {
     let products = {};
     let categories = [];
     try {
-      products = readCatalogue();
+      products = readUserCatalogue(request);
 
       // convert products object to array of categories with metadata
       categories = Object.keys(products).map(categoryName => ({
@@ -80,6 +59,7 @@ const dashboard = {
       id: "dashboard",
       categories: categories,
       products: products,
+      currentUser: request.currentUser,
       info: appStore.getAppInfo()
     };
 
@@ -97,14 +77,14 @@ const dashboard = {
     }
 
     try {
-      const catalogue = readCatalogue();
+      const catalogue = readUserCatalogue(request);
 
       if (catalogue[categoryId]) {
         return response.status(409).json({ error: 'Collection already exists' });
       }
 
       catalogue[categoryId] = [];
-      writeCatalogue(catalogue);
+      writeUserCatalogue(request, catalogue);
       logger.info(`Collection added: ${categoryId}`);
 
       response.json({
@@ -124,14 +104,14 @@ const dashboard = {
     const categoryId = request.params.type;
 
     try {
-      const catalogue = readCatalogue();
+      const catalogue = readUserCatalogue(request);
 
       if (!catalogue[categoryId]) {
         return response.status(404).json({ error: 'Collection not found' });
       }
 
       delete catalogue[categoryId];
-      writeCatalogue(catalogue);
+      writeUserCatalogue(request, catalogue);
       logger.info(`Collection deleted: ${categoryId}`);
 
       response.json({ success: true });

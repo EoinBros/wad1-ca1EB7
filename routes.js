@@ -11,28 +11,37 @@ import playlist from './controllers/playlist.js';
 import contact from './controllers/contact.js';
 import stats from './controllers/stats.js';
 import category from './controllers/category.js';
+import accounts from './controllers/accounts.js';
+
+router.use(accounts.checkAuth);
 
 // GET routes
 router.get('/', start.createView);
-router.get('/dashboard', dashboard.createView);
+router.get('/login', accounts.showLogin);
+router.post('/login', accounts.login);
+router.get('/signup', accounts.showSignup);
+router.post('/signup', accounts.signup);
+router.get('/logout', accounts.logout);
+router.get('/logoff', accounts.logout);
+router.get('/dashboard', accounts.requireAuth, dashboard.createView);
 router.get('/about', about.createView);
 router.get('/playlist/:id', playlist.createView);
 router.get('/contact', contact.createView);
 router.get('/stats', stats.createView);
-router.get('/category/:type', category.createView);
+router.get('/category/:type', accounts.requireAuth, category.createView);
 
 // Dashboard collection routes
-router.post('/dashboard/category', dashboard.addCategory);
-router.delete('/dashboard/category/:type', dashboard.deleteCategory);
+router.post('/dashboard/category', accounts.requireAuth, dashboard.addCategory);
+router.delete('/dashboard/category/:type', accounts.requireAuth, dashboard.deleteCategory);
 
 // POST route - add item to category
-router.post('/category/:type', category.addItem);
+router.post('/category/:type', accounts.requireAuth, category.addItem);
 
 // PUT route - update item in category
-router.put('/category/:type/:id', category.updateItem);
+router.put('/category/:type/:id', accounts.requireAuth, category.updateItem);
 
 // DELETE route - delete item from category
-router.delete('/category/:type/:id', category.deleteItem);
+router.delete('/category/:type/:id', accounts.requireAuth, category.deleteItem);
 
 router.get('/error', (request, response) => response.status(404).end('Page not found.'));
 

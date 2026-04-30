@@ -1,0 +1,82 @@
+{
+  "users": [
+    {
+      "id": "53faf79d-c853-4e52-9fc6-9bfeee3492d1",
+      "firstName": "Guest",
+      "lastName": "User",
+      "email": "eoinbrosnab07@gmail.com",
+      "password": "96d9632f363564cc3032521409cf22a852f2032eec099ed5967c0d000cec607a",
+      "catalogue": {
+        "tshirts": [
+          {
+            "id": 1,
+            "name": "Supreme T-Shirt",
+            "price": "$40",
+            "description": "Supreme T-Shirt",
+            "image": "/tshirt.webp"
+          },
+          {
+            "id": 7,
+            "name": "Casablanca T-Shirt",
+            "price": "$35",
+            "description": "Casablanca T-Shirt",
+            "image": "/casa.avif"
+          },
+          {
+            "id": 8,
+            "name": "Gallery dept T-Shirt",
+            "price": "$30",
+            "description": "Gallery dept T-Shirt",
+            "image": "/gd.jpg"
+          }
+        ],
+        "jackets": [
+          {
+            "id": 2,
+            "name": "Denim Jacket",
+            "price": "$150",
+            "description": "Ducati X supreme jacket",
+            "image": "/jacket.jpeg"
+          },
+          {
+            "id": 4,
+            "name": "Black nocta Puffer",
+            "price": "$170",
+            "description": "Black nocta puffer",
+            "image": "/puffer.webp"
+          },
+          {
+            "id": 5,
+            "name": "Corteiz Puffer",
+            "price": "$120",
+            "description": "Corteiz Puffer",
+            "image": "/crtz.webp"
+          }
+        ],
+        "sneakers": [
+          {
+            "id": 3,
+            "name": "Neon 95s",
+            "price": "$200",
+            "description": "Neon 95s",
+            "image": "/sneakers.jpeg"
+          },
+          {
+            "id": 6,
+            "name": "Jordan 4 SB",
+            "price": "$250",
+            "description": "Jordan 4 SB",
+            "image": "/jordan4.webp"
+          },
+          {
+            "id": 9,
+            "name": "Mason Miharas",
+            "price": "$380",
+            "description": "Mason miharas",
+            "image": "/mason.jpg"
+          }
+        ]
+      }
+    }
+  ]
+}

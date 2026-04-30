@@ -1,13 +1,24 @@
 <nav class="ui stackable menu">
   <header class="ui header item"> <a href="/"> Clothing Store Front </a></header>
   <div class="right menu">
-    <a id="dashboard" class="item" href="/dashboard">Collection</a>
+    {{#if currentUser}}
+      <a id="dashboard" class="item" href="/dashboard">Collection</a>
+    {{/if}}
     <a id="about" class="item" href="/contact">About</a>
     <a id="stats" class="item" href="/stats">Stats</a>
-    <a id="contact" class="item" href="/about">Collection</a>
+    <a id="contact" class="item" href="/about">Catalogue</a>
+    {{#if currentUser}}
+      <a id="logout" class="item" href="/logout">Logout</a>
+    {{else}}
+      <a id="signup" class="item" href="/signup">Signup</a>
+      <a id="login" class="item" href="/login">Login</a>
+    {{/if}}
   </div>
 </nav>
 
 <script>
- document.querySelector("#{{id}}").classList.add("active");
+ const activeMenuItem = document.querySelector("#{{id}}");
+ if (activeMenuItem) {
+   activeMenuItem.classList.add("active");
+ }
 </script>

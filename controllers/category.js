@@ -1,20 +1,17 @@
 'use strict';
 
 import logger from '../utils/logger.js';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import userStore from '../models/user-store.js';
 
 // generic controller for one clothing category (tshirts, jackets, sneakers)
 // reads catalogue and renders category template filtered to that category
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+function readUserCatalogue(request) {
+  return userStore.getCatalogue(request.currentUser.id);
+}
 
-const CATALOGUE_PATH = path.join(__dirname, '../models/Catalogue.json');
-
-function readCatalogue() {
-  return JSON.parse(fs.readFileSync(CATALOGUE_PATH));
+function writeUserCatalogue(request, catalogue) {
+  userStore.saveCatalogue(request.currentUser.id, catalogue);
 }
 
 function isValidCategory(type, catalogue) {
@@ -56,7 +53,7 @@ const category = {
 
     let products = {};
     try {
-      products = readCatalogue();
+      products = readUserCatalogue(request);
     } catch (e) {
       logger.error('Error reading catalogue for category page', e);
       products = {};
@@ -102,7 +99,7 @@ const category = {
   addItem(request, response) {
     const type = request.params.type;
     try {
-      const catalogue = readCatalogue();
+      const catalogue = readUserCatalogue(request);
 
       if (!isValidCategory(type, catalogue)) {
         logger.warn(`Invalid category for add: ${type}`);
@@ -127,7 +124,7 @@ const category = {
       }
       catalogue[type].push(newItem);
 
-      fs.writeFileSync(CATALOGUE_PATH, JSON.stringify(catalogue, null, 2));
+      writeUserCatalogue(request, catalogue);
       logger.info(`Item added to ${type}: ${newItem.name}`);
       response.json({ success: true, item: newItem });
     } catch (e) {
@@ -141,7 +138,7 @@ const category = {
     const itemId = parseInt(request.params.id);
 
     try {
-      const catalogue = readCatalogue();
+      const catalogue = readUserCatalogue(request);
       
       if (!isValidCategory(type, catalogue)) {
         logger.warn(`Invalid category for update: ${type}`);
@@ -165,7 +162,7 @@ const category = {
       };
 
       catalogue[type] = items;
-      fs.writeFileSync(CATALOGUE_PATH, JSON.stringify(catalogue, null, 2));
+      writeUserCatalogue(request, catalogue);
       logger.info(`Item updated in ${type}: ID ${itemId}`);
       response.json({ success: true, item: items[itemIndex] });
     } catch (e) {
@@ -179,7 +176,7 @@ const category = {
     const itemId = parseInt(request.params.id);
 
     try {
-      const catalogue = readCatalogue();
+      const catalogue = readUserCatalogue(request);
       
       if (!isValidCategory(type, catalogue)) {
         logger.warn(`Invalid category for delete: ${type}`);
@@ -196,7 +193,7 @@ const category = {
 
       const deletedItem = items.splice(itemIndex, 1);
       catalogue[type] = items;
-      fs.writeFileSync(CATALOGUE_PATH, JSON.stringify(catalogue, null, 2));
+      writeUserCatalogue(request, catalogue);
       logger.info(`Item deleted from ${type}: ${deletedItem[0].name}`);
       response.json({ success: true });
     } catch (e) {

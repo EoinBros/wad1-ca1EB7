@@ -15,7 +15,6 @@ const start = {
       info: appStore.getAppInfo()
     };
     
-    //logger.debug(viewData);
     response.render('start', viewData);   
   },
 };

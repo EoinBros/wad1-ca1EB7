@@ -11,6 +11,17 @@ const port = 3000;
 app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use((request, response, next) => {
+  const cookieHeader = request.headers.cookie || '';
+  request.cookies = cookieHeader.split(';').reduce((cookies, cookie) => {
+    const [name, ...valueParts] = cookie.trim().split('=');
+    if (name) {
+      cookies[name] = decodeURIComponent(valueParts.join('='));
+    }
+    return cookies;
+  }, {});
+  next();
+});
 
 const handlebars = create({extname: '.hbs'});
 app.engine(".hbs", handlebars.engine);

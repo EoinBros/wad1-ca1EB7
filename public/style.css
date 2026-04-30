@@ -15,6 +15,112 @@ a:hover {
   text-decoration: underline;
 }
 
+/* Authentication pages */
+.auth-page {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3em 1em;
+}
+
+.auth-card {
+  width: min(100%, 980px);
+  background-color: #005a9c;
+  padding: 0.8em;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25);
+}
+
+.auth-menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  background-color: white;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.8em;
+  border: 1px solid #ddd;
+}
+
+.auth-brand {
+  padding: 1em 1.4em;
+  color: #005a9c;
+  font-size: 1.35em;
+  font-weight: 700;
+}
+
+.auth-tabs {
+  display: flex;
+}
+
+.auth-tabs a {
+  display: flex;
+  align-items: center;
+  padding: 0 1.2em;
+  color: #111;
+  border-left: 1px solid #ddd;
+}
+
+.auth-tabs a.active {
+  background-color: #d9d9d9;
+  font-weight: 700;
+}
+
+.auth-form {
+  background-color: white;
+  border-radius: 4px;
+  padding: 1.2em;
+  border: 1px solid #ddd;
+}
+
+.auth-form h1 {
+  margin: 0 0 1em;
+  font-size: 1.35em;
+  color: #222;
+}
+
+.auth-form label {
+  display: block;
+  font-weight: 700;
+  margin: 1em 0 0.45em;
+}
+
+.auth-form input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.85em;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1em;
+  font-family: 'Arial', sans-serif;
+}
+
+.auth-form input:focus {
+  outline: none;
+  border-color: #007acc;
+  box-shadow: 0 0 4px rgba(0,122,204,0.25);
+}
+
+.auth-button {
+  margin-top: 1em;
+  background-color: #007acc;
+  color: white;
+  font-weight: 700;
+}
+
+.auth-button:hover {
+  background-color: #005a9c;
+}
+
+.auth-error {
+  margin: 0 0 1em;
+  padding: 0.8em;
+  border-radius: 4px;
+  background-color: #f8d7da;
+  color: #842029;
+  border: 1px solid #f5c2c7;
+}
+
 /* Header and navigation styling */
 nav.ui.stackable.menu {
   background-color: #005a9c;
@@ -374,6 +480,13 @@ nav.ui.stackable.menu .header.item a {
   margin-bottom: 1.5em;
   color: #333;
   text-align: center;
+}
+
+.dashboard-user {
+  text-align: center;
+  color: #666;
+  margin-top: -1em;
+  margin-bottom: 1.5em;
 }
 
 .collections-grid {
