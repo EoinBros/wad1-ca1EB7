@@ -11,32 +11,55 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const VALID_CATEGORIES = new Set(['tshirts', 'jackets', 'sneakers']);
 const CATALOGUE_PATH = path.join(__dirname, '../models/Catalogue.json');
+
+function readCatalogue() {
+  return JSON.parse(fs.readFileSync(CATALOGUE_PATH));
+}
+
+function isValidCategory(type, catalogue) {
+  return Object.prototype.hasOwnProperty.call(catalogue, type);
+}
+
+function formatCategoryName(categoryId) {
+  return categoryId
+    .split('-')
+    .filter(Boolean)
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
 
 const category = {
   createView(request, response) {
     const type = request.params.type;
-    if (!VALID_CATEGORIES.has(type)) {
+
+    let products = {};
+    try {
+      products = readCatalogue();
+    } catch (e) {
+      logger.error('Error reading catalogue for category page', e);
+      products = {};
+    }
+
+    if (!isValidCategory(type, products)) {
       logger.warn(`Invalid category requested: ${type}`);
       return response.redirect('/dashboard');
     }
 
     logger.info(`Category page loading (${type})`);
 
-    let products = {};
-    try {
-      const catalogueData = JSON.parse(fs.readFileSync(CATALOGUE_PATH));
-      products = catalogueData;
-    } catch (e) {
-      logger.error('Error reading catalogue for category page', e);
-      products = {tshirts: [], jackets: [], sneakers: []};
-    }
+    const searchTerm = (request.query.search || '').trim().toLowerCase();
+    const allItems = products[type] || [];
+    const items = searchTerm
+      ? allItems.filter(item => item.name.toLowerCase().includes(searchTerm))
+      : allItems;
 
     const viewData = {
-      title: `${type.charAt(0).toUpperCase() + type.slice(1)}`,
+      title: formatCategoryName(type),
       id: type,
-      items: products[type] || [],
+      items: items,
+      searchTerm: request.query.search || '',
+      isSearching: searchTerm.length > 0,
     };
 
     response.render('category', viewData);
@@ -44,13 +67,13 @@ const category = {
 
   addItem(request, response) {
     const type = request.params.type;
-    if (!VALID_CATEGORIES.has(type)) {
-      logger.warn(`Invalid category for add: ${type}`);
-      return response.status(400).json({ error: 'Invalid category' });
-    }
-
     try {
-      const catalogue = JSON.parse(fs.readFileSync(CATALOGUE_PATH));
+      const catalogue = readCatalogue();
+
+      if (!isValidCategory(type, catalogue)) {
+        logger.warn(`Invalid category for add: ${type}`);
+        return response.status(400).json({ error: 'Invalid category' });
+      }
       
       // Get next ID
       const allItems = Object.values(catalogue).flat();
@@ -82,14 +105,15 @@ const category = {
   updateItem(request, response) {
     const type = request.params.type;
     const itemId = parseInt(request.params.id);
-    
-    if (!VALID_CATEGORIES.has(type)) {
-      logger.warn(`Invalid category for update: ${type}`);
-      return response.status(400).json({ error: 'Invalid category' });
-    }
 
     try {
-      const catalogue = JSON.parse(fs.readFileSync(CATALOGUE_PATH));
+      const catalogue = readCatalogue();
+      
+      if (!isValidCategory(type, catalogue)) {
+        logger.warn(`Invalid category for update: ${type}`);
+        return response.status(400).json({ error: 'Invalid category' });
+      }
+
       const items = catalogue[type] || [];
       const itemIndex = items.findIndex(item => item.id === itemId);
 
@@ -119,14 +143,15 @@ const category = {
   deleteItem(request, response) {
     const type = request.params.type;
     const itemId = parseInt(request.params.id);
-    
-    if (!VALID_CATEGORIES.has(type)) {
-      logger.warn(`Invalid category for delete: ${type}`);
-      return response.status(400).json({ error: 'Invalid category' });
-    }
 
     try {
-      const catalogue = JSON.parse(fs.readFileSync(CATALOGUE_PATH));
+      const catalogue = readCatalogue();
+      
+      if (!isValidCategory(type, catalogue)) {
+        logger.warn(`Invalid category for delete: ${type}`);
+        return response.status(400).json({ error: 'Invalid category' });
+      }
+
       const items = catalogue[type] || [];
       const itemIndex = items.findIndex(item => item.id === itemId);
 

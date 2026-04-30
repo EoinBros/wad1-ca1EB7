@@ -66,25 +66,50 @@
   <script>
     function deleteCategory(categoryId) {
       if (confirm(`Are you sure you want to delete the "${categoryId}" collection?`)) {
-        // TODO: Implement delete functionality - send DELETE request to server
-        console.log('Delete collection:', categoryId);
-        alert('Delete functionality to be implemented');
+        fetch(`/dashboard/category/${categoryId}`, {
+          method: 'DELETE'
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              window.location.reload();
+            } else {
+              alert(data.error || 'Error deleting collection');
+            }
+          })
+          .catch(() => {
+            alert('Error deleting collection');
+          });
       }
     }
 
     function addCategory(event) {
       event.preventDefault();
       const collectionName = document.getElementById('collection-name').value;
-      const collectionImage = document.getElementById('collection-image').files[0];
       
       if (!collectionName.trim()) {
         alert('Please enter a collection name');
         return;
       }
       
-      // TODO: Implement add functionality - send POST request to server
-      console.log('Add collection:', collectionName, collectionImage);
-      alert('Add functionality to be implemented');
+      fetch('/dashboard/category', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ collectionName })
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            window.location.reload();
+          } else {
+            alert(data.error || 'Error adding collection');
+          }
+        })
+        .catch(() => {
+          alert('Error adding collection');
+        });
     }
   </script>
 </body>

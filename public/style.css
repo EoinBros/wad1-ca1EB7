@@ -560,6 +560,72 @@ nav.ui.stackable.menu .header.item a {
   margin-bottom: 2em;
 }
 
+.search-form {
+  padding: 1.5em;
+  border-bottom: 1px solid #dee2e6;
+  background-color: #f8f9fa;
+}
+
+.search-form label {
+  display: block;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.6em;
+}
+
+.search-controls {
+  display: flex;
+  gap: 0.75em;
+  flex-wrap: wrap;
+}
+
+.search-controls input {
+  flex: 1 1 260px;
+  padding: 0.7em;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.95em;
+  font-family: 'Arial', sans-serif;
+}
+
+.search-controls input:focus {
+  outline: none;
+  border-color: #007acc;
+  box-shadow: 0 0 4px rgba(0,122,204,0.2);
+}
+
+.btn-search {
+  background-color: #007acc;
+  color: white;
+}
+
+.btn-search:hover {
+  background-color: #005a9c;
+}
+
+.btn-clear {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-clear:hover {
+  background-color: #5a6268;
+  text-decoration: none;
+}
+
+.search-results-text {
+  margin: 0;
+  padding: 1em 1.5em;
+  color: #555;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.no-results {
+  text-align: center;
+  color: #666;
+  font-weight: 600;
+}
+
 .table-wrapper {
   overflow-x: auto;
 }

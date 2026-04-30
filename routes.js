@@ -21,6 +21,10 @@ router.get('/contact', contact.createView);
 router.get('/stats', stats.createView);
 router.get('/category/:type', category.createView);
 
+// Dashboard collection routes
+router.post('/dashboard/category', dashboard.addCategory);
+router.delete('/dashboard/category/:type', dashboard.deleteCategory);
+
 // POST route - add item to category
 router.post('/category/:type', category.addItem);
 
@@ -33,4 +37,3 @@ router.delete('/category/:type/:id', category.deleteItem);
 router.get('/error', (request, response) => response.status(404).end('Page not found.'));
 
 export default router;
-

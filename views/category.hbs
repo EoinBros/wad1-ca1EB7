@@ -13,6 +13,27 @@
 
   <main id="category-container">
     <section class="items-section">
+      <form class="search-form" action="/category/{{id}}" method="GET">
+        <label for="search">Search by name</label>
+        <div class="search-controls">
+          <input
+            type="text"
+            id="search"
+            name="search"
+            value="{{searchTerm}}"
+            placeholder="Enter item name"
+          />
+          <button type="submit" class="btn btn-search">Search</button>
+          {{#if isSearching}}
+            <a href="/category/{{id}}" class="btn btn-clear">Clear</a>
+          {{/if}}
+        </div>
+      </form>
+
+      {{#if isSearching}}
+        <p class="search-results-text">Showing results for "{{searchTerm}}"</p>
+      {{/if}}
+
       <div class="table-wrapper">
         <table class="items-table">
           <thead>
@@ -46,6 +67,11 @@
                 </td>
               </tr>
             {{/each}}
+            {{#unless items}}
+              <tr>
+                <td colspan="6" class="no-results">No items found.</td>
+              </tr>
+            {{/unless}}
           </tbody>
         </table>
       </div>
