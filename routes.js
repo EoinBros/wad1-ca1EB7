@@ -12,6 +12,7 @@ import contact from './controllers/contact.js';
 import stats from './controllers/stats.js';
 import category from './controllers/category.js';
 import accounts from './controllers/accounts.js';
+import upload from './utils/upload.js';
 
 router.use(accounts.checkAuth);
 
@@ -20,7 +21,7 @@ router.get('/', start.createView);
 router.get('/login', accounts.showLogin);
 router.post('/login', accounts.login);
 router.get('/signup', accounts.showSignup);
-router.post('/signup', accounts.signup);
+router.post('/signup', upload, accounts.signup);
 router.get('/logout', accounts.logout);
 router.get('/logoff', accounts.logout);
 router.get('/dashboard', accounts.requireAuth, dashboard.createView);
@@ -31,14 +32,14 @@ router.get('/stats', stats.createView);
 router.get('/category/:type', accounts.requireAuth, category.createView);
 
 // Dashboard collection routes
-router.post('/dashboard/category', accounts.requireAuth, dashboard.addCategory);
+router.post('/dashboard/category', accounts.requireAuth, upload, dashboard.addCategory);
 router.delete('/dashboard/category/:type', accounts.requireAuth, dashboard.deleteCategory);
 
 // POST route - add item to category
-router.post('/category/:type', accounts.requireAuth, category.addItem);
+router.post('/category/:type', accounts.requireAuth, upload, category.addItem);
 
 // PUT route - update item in category
-router.put('/category/:type/:id', accounts.requireAuth, category.updateItem);
+router.put('/category/:type/:id', accounts.requireAuth, upload, category.updateItem);
 
 // DELETE route - delete item from category
 router.delete('/category/:type/:id', accounts.requireAuth, category.deleteItem);

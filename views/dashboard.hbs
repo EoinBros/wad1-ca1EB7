@@ -40,7 +40,7 @@
 
     <section class="add-collection-section">
       <h2>Add New Collection</h2>
-      <form class="add-collection-form" onsubmit="addCategory(event)">
+      <form class="add-collection-form" onsubmit="addCategory(event)" enctype="multipart/form-data">
         <div class="form-group">
           <label for="collection-name">Collection Name:</label>
           <input 
@@ -89,18 +89,22 @@
     function addCategory(event) {
       event.preventDefault();
       const collectionName = document.getElementById('collection-name').value;
+      const collectionImage = document.getElementById('collection-image').files[0];
       
       if (!collectionName.trim()) {
         alert('Please enter a collection name');
         return;
       }
+
+      const formData = new FormData();
+      formData.append('collectionName', collectionName);
+      if (collectionImage) {
+        formData.append('collectionImage', collectionImage);
+      }
       
       fetch('/dashboard/category', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ collectionName })
+        body: formData
       })
         .then(response => response.json())
         .then(data => {

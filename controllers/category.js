@@ -116,7 +116,7 @@ const category = {
         name: request.body.name,
         price: request.body.price,
         description: request.body.description,
-        image: request.body.image
+        image: request.files?.itemImage?.path || request.body.image || '/main.webp'
       };
 
       if (!catalogue[type]) {
@@ -158,7 +158,7 @@ const category = {
         name: request.body.name,
         price: request.body.price,
         description: request.body.description,
-        image: request.body.image
+        image: request.files?.itemImage?.path || request.body.image || items[itemIndex].image
       };
 
       catalogue[type] = items;

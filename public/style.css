@@ -131,6 +131,21 @@ nav.ui.stackable.menu .header.item a {
   color: white;
 }
 
+.user-menu-label {
+  display: flex !important;
+  align-items: center;
+  gap: 0.5em;
+  font-weight: 700;
+}
+
+.menu-profile-image {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255,255,255,0.65);
+}
+
 /* Product card used in catalogue views */
 .product-card {
   border: 1px solid #ccc;
@@ -645,6 +660,13 @@ nav.ui.stackable.menu .header.item a {
   border-radius: 4px;
   font-size: 1em;
   font-family: 'Arial', sans-serif;
+}
+
+.form-group input[type="file"],
+.auth-form input[type="file"],
+.add-item-table input[type="file"] {
+  background-color: white;
+  cursor: pointer;
 }
 
 .form-group input:focus {

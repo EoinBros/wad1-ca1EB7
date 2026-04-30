@@ -2,6 +2,12 @@
   <header class="ui header item"> <a href="/"> Clothing Store Front </a></header>
   <div class="right menu">
     {{#if currentUser}}
+      <span class="item user-menu-label">
+        <img src="{{currentUser.profileImage}}" alt="{{currentUser.firstName}}" class="menu-profile-image" />
+        {{currentUser.firstName}} {{currentUser.lastName}}
+      </span>
+    {{/if}}
+    {{#if currentUser}}
       <a id="dashboard" class="item" href="/dashboard">Collection</a>
     {{/if}}
     <a id="about" class="item" href="/contact">About</a>

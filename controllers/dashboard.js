@@ -39,6 +39,7 @@ const dashboard = {
     let categories = [];
     try {
       products = readUserCatalogue(request);
+      const collectionImages = userStore.getCollectionImages(request.currentUser.id);
 
       // convert products object to array of categories with metadata
       categories = Object.keys(products).map(categoryName => ({
@@ -47,7 +48,7 @@ const dashboard = {
         displayName: formatCategoryName(categoryName),
         items: products[categoryName],
         itemCount: products[categoryName].length,
-        image: products[categoryName][0]?.image || '/main.webp',
+        image: collectionImages[categoryName] || products[categoryName][0]?.image || '/main.webp',
         createdDate: new Date().toLocaleDateString()
       }));
     } catch (e) {
@@ -85,6 +86,9 @@ const dashboard = {
 
       catalogue[categoryId] = [];
       writeUserCatalogue(request, catalogue);
+      if (request.files?.collectionImage?.path) {
+        userStore.saveCollectionImage(request.currentUser.id, categoryId, request.files.collectionImage.path);
+      }
       logger.info(`Collection added: ${categoryId}`);
 
       response.json({

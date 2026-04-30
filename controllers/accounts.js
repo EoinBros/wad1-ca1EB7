@@ -5,7 +5,11 @@ import userStore from '../models/user-store.js';
 
 function getLoggedInUser(request) {
   const userId = request.cookies?.userId;
-  return userId ? userStore.getUserById(userId) : null;
+  const user = userId ? userStore.getUserById(userId) : null;
+  if (user && !user.profileImage) {
+    user.profileImage = '/batman.jpg';
+  }
+  return user;
 }
 
 const accounts = {
@@ -64,7 +68,8 @@ const accounts = {
       return response.redirect(`/signup?error=${encodeURIComponent('Email already registered')}`);
     }
 
-    const user = userStore.addUser(firstName, lastName, email, password);
+    const profileImage = request.files?.profileImage?.path || '/batman.jpg';
+    const user = userStore.addUser(firstName, lastName, email, password, profileImage);
     response.cookie('userId', user.id, { httpOnly: true, sameSite: 'lax' });
     logger.info(`User signed up: ${user.email}`);
     response.redirect('/dashboard');

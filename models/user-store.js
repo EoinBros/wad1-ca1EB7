@@ -39,7 +39,7 @@ const userStore = {
     return this.getAllUsers().find(user => user.email.toLowerCase() === email.toLowerCase());
   },
 
-  addUser(firstName, lastName, email, password) {
+  addUser(firstName, lastName, email, password, profileImage = '/batman.jpg') {
     const data = readUsersFile();
     const user = {
       id: crypto.randomUUID(),
@@ -47,7 +47,9 @@ const userStore = {
       lastName,
       email,
       password: hashPassword(password),
-      catalogue: getStarterCatalogue()
+      profileImage,
+      catalogue: getStarterCatalogue(),
+      collectionImages: {}
     };
 
     data.users.push(user);
@@ -74,6 +76,22 @@ const userStore = {
 
     if (user) {
       user.catalogue = catalogue;
+      writeUsersFile(data);
+    }
+  },
+
+  getCollectionImages(userId) {
+    const user = this.getUserById(userId);
+    return user?.collectionImages || {};
+  },
+
+  saveCollectionImage(userId, categoryId, imagePath) {
+    const data = readUsersFile();
+    const user = data.users.find(currentUser => currentUser.id === userId);
+
+    if (user) {
+      user.collectionImages = user.collectionImages || {};
+      user.collectionImages[categoryId] = imagePath;
       writeUsersFile(data);
     }
   }
