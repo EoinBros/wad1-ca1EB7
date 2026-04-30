@@ -14,24 +14,48 @@
   <main id="category-container">
     <section class="items-section">
       <form class="search-form" action="/category/{{id}}" method="GET">
-        <label for="search">Search by name</label>
         <div class="search-controls">
-          <input
-            type="text"
-            id="search"
-            name="search"
-            value="{{searchTerm}}"
-            placeholder="Enter item name"
-          />
+          <div class="filter-field filter-field-search">
+            <label for="search">Search by name</label>
+            <input
+              type="text"
+              id="search"
+              name="search"
+              value="{{searchTerm}}"
+              placeholder="Enter item name"
+            />
+          </div>
+
+          <div class="filter-field">
+            <label for="sort">Sort by</label>
+            <select id="sort" name="sort">
+              <option value="">Default</option>
+              <option value="name" {{#if sortByName}}selected{{/if}}>Name</option>
+              <option value="price" {{#if sortByPrice}}selected{{/if}}>Price</option>
+              <option value="description" {{#if sortByDescription}}selected{{/if}}>Description</option>
+            </select>
+          </div>
+
+          <div class="filter-field">
+            <label for="order">Price</label>
+            <select id="order" name="order">
+              <option value="asc" {{#if sortAsc}}selected{{/if}}>Low-High</option>
+              <option value="desc" {{#if sortDesc}}selected{{/if}}>High-Low</option>
+            </select>
+          </div>
+
           <button type="submit" class="btn btn-search">Search</button>
-          {{#if isSearching}}
+          {{#if hasFilters}}
             <a href="/category/{{id}}" class="btn btn-clear">Clear</a>
           {{/if}}
         </div>
       </form>
 
-      {{#if isSearching}}
-        <p class="search-results-text">Showing results for "{{searchTerm}}"</p>
+      {{#if hasFilters}}
+        <p class="search-results-text">
+          {{#if isSearching}}Showing results for "{{searchTerm}}"{{/if}}
+          {{#if isSorted}} Sorted by {{sortBy}} ({{sortOrder}}){{/if}}
+        </p>
       {{/if}}
 
       <div class="table-wrapper">

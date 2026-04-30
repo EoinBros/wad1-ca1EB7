@@ -29,6 +29,27 @@ function formatCategoryName(categoryId) {
     .join(' ');
 }
 
+function getPriceValue(price) {
+  return parseFloat(String(price).replace(/[^0-9.]/g, '')) || 0;
+}
+
+function sortItems(items, sortBy, sortOrder) {
+  const sorters = {
+    name: (a, b) => a.name.localeCompare(b.name),
+    price: (a, b) => getPriceValue(a.price) - getPriceValue(b.price),
+    description: (a, b) => a.description.localeCompare(b.description)
+  };
+
+  if (!sorters[sortBy]) {
+    return items;
+  }
+
+  return [...items].sort((a, b) => {
+    const result = sorters[sortBy](a, b);
+    return sortOrder === 'desc' ? -result : result;
+  });
+}
+
 const category = {
   createView(request, response) {
     const type = request.params.type;
@@ -48,18 +69,31 @@ const category = {
 
     logger.info(`Category page loading (${type})`);
 
-    const searchTerm = (request.query.search || '').trim().toLowerCase();
+    const rawSearchTerm = request.query.search || '';
+    const searchTerm = rawSearchTerm.trim().toLowerCase();
+    const sortBy = ['name', 'price', 'description'].includes(request.query.sort) ? request.query.sort : '';
+    const sortOrder = request.query.order === 'desc' ? 'desc' : 'asc';
     const allItems = products[type] || [];
-    const items = searchTerm
+    const filteredItems = searchTerm
       ? allItems.filter(item => item.name.toLowerCase().includes(searchTerm))
       : allItems;
+    const items = sortItems(filteredItems, sortBy, sortOrder);
 
     const viewData = {
       title: formatCategoryName(type),
       id: type,
       items: items,
-      searchTerm: request.query.search || '',
+      searchTerm: rawSearchTerm,
       isSearching: searchTerm.length > 0,
+      isSorted: sortBy.length > 0,
+      hasFilters: searchTerm.length > 0 || sortBy.length > 0,
+      sortBy: sortBy,
+      sortOrder: sortOrder,
+      sortByName: sortBy === 'name',
+      sortByPrice: sortBy === 'price',
+      sortByDescription: sortBy === 'description',
+      sortAsc: sortOrder === 'asc',
+      sortDesc: sortOrder === 'desc',
     };
 
     response.render('category', viewData);
