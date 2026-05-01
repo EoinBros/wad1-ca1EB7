@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{title}}</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  {{> menu id=id}}
+
+  <main class="brands-page">
+    <header class="brands-header">
+      <h1>{{title}}</h1>
+      <p>Displays brands from my clothing store.</p>
+    </header>
+
+    <section class="brands-grid">
+      {{#each brands}}
+        <article class="brand-card">
+          <img src="{{this.image}}" alt="{{this.name}}" class="brand-image" />
+          <div class="brand-content">
+            <h2>{{this.name}}</h2>
+            <p class="brand-category">{{this.category}}</p>
+            <p>{{this.description}}</p>
+            <p class="brand-featured">Featured item: {{this.featuredItem}}</p>
+          </div>
+        </article>
+      {{/each}}
+    </section>
+  </main>
+</body>
+</html>

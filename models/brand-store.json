@@ -1,0 +1,32 @@
+{
+  "brands": [
+    {
+      "name": "Supreme",
+      "category": "Streetwear",
+      "featuredItem": "Supreme T-Shirt",
+      "description": "A Supreme T-shirt from week 23 drop.",
+      "image": "/tshirt.webp"
+    },
+    {
+      "name": "Casablanca",
+      "category": "Desinger",
+      "featuredItem": "Casablanca T-Shirt",
+      "description": "A designer set from Casablancas 2023 collection.",
+      "image": "/casa.avif"
+    },
+    {
+      "name": "Corteiz",
+      "category": "Streetwear",
+      "featuredItem": "Corteiz Puffer",
+      "description": "The Corteiz BOLO puffer from there winter drop..",
+      "image": "/crtz.webp"
+    },
+    {
+      "name": "Jordan",
+      "category": "Sneakers",
+      "featuredItem": "Jordan 4 SB",
+      "description": "Limited edition Sb Jordans 4s with combines sb and jordan.",
+      "image": "/jordan4.webp"
+    }
+  ]
+}

@@ -13,6 +13,7 @@ import stats from './controllers/stats.js';
 import category from './controllers/category.js';
 import accounts from './controllers/accounts.js';
 import upload from './utils/upload.js';
+import brands from './controllers/brands.js';
 
 router.use(accounts.checkAuth);
 
@@ -29,6 +30,7 @@ router.get('/about', about.createView);
 router.get('/playlist/:id', playlist.createView);
 router.get('/contact', contact.createView);
 router.get('/stats', stats.createView);
+router.get('/brands', brands.createView);
 router.get('/category/:type', accounts.requireAuth, category.createView);
 
 // Dashboard collection routes

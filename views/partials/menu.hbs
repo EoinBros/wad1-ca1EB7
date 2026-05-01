@@ -4,7 +4,7 @@
     {{#if currentUser}}
       <span class="item user-menu-label">
         <img src="{{currentUser.profileImage}}" alt="{{currentUser.firstName}}" class="menu-profile-image" />
-        {{currentUser.firstName}} {{currentUser.lastName}}
+        <span>Logged in as {{currentUser.firstName}} {{currentUser.lastName}}</span>
       </span>
     {{/if}}
     {{#if currentUser}}
@@ -12,6 +12,7 @@
     {{/if}}
     <a id="about" class="item" href="/contact">About</a>
     <a id="stats" class="item" href="/stats">Stats</a>
+    <a id="brands" class="item" href="/brands">Brands</a>
     <a id="contact" class="item" href="/about">Catalogue</a>
     {{#if currentUser}}
       <a id="logout" class="item" href="/logout">Logout</a>
