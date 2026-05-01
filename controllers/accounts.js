@@ -12,6 +12,26 @@ function getLoggedInUser(request) {
   return user;
 }
 
+function getPasswordRuleError(password) {
+  if (password.length < 8) {
+    return 'Password must be at least 8 characters long';
+  }
+
+  if (!/[A-Z]/.test(password)) {
+    return 'Password must include at least one uppercase letter';
+  }
+
+  if (!/[a-z]/.test(password)) {
+    return 'Password must include at least one lowercase letter';
+  }
+
+  if (!/[0-9]/.test(password)) {
+    return 'Password must include at least one number';
+  }
+
+  return '';
+}
+
 const accounts = {
   checkAuth(request, response, next) {
     const currentUser = getLoggedInUser(request);
@@ -37,11 +57,11 @@ const accounts = {
 
   login(request, response) {
     const { email, password } = request.body;
-    const safeEmail = email || 'guest@example.com';
-    let user = userStore.getUserByEmail(safeEmail);
+    const user = userStore.authenticate(email || '', password || '');
 
     if (!user) {
-      user = userStore.addUser('Guest', 'User', safeEmail, password || 'password');
+      logger.warn(`Failed login for ${email}`);
+      return response.redirect(`/login?error=${encodeURIComponent('Invalid email or password')}`);
     }
 
     response.cookie('userId', user.id, { httpOnly: true, sameSite: 'lax' });
@@ -62,6 +82,11 @@ const accounts = {
 
     if (!firstName || !lastName || !email || !password) {
       return response.redirect(`/signup?error=${encodeURIComponent('Please fill in all fields')}`);
+    }
+
+    const passwordError = getPasswordRuleError(password);
+    if (passwordError) {
+      return response.redirect(`/signup?error=${encodeURIComponent(passwordError)}`);
     }
 
     if (userStore.getUserByEmail(email)) {

@@ -121,6 +121,12 @@ a:hover {
   border: 1px solid #f5c2c7;
 }
 
+.password-rules {
+  margin: 0.5em 0 0;
+  color: #666;
+  font-size: 0.9em;
+}
+
 /* Header and navigation styling */
 nav.ui.stackable.menu {
   background-color: #005a9c;

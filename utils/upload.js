@@ -4,6 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
 import { fileURLToPath } from 'url';
+import { uploadImageToCloudinary } from './cloudinary.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -48,7 +49,7 @@ function parseContentDisposition(value) {
   return result;
 }
 
-function saveFile(fieldName, filename, contentType, data) {
+async function saveFile(fieldName, filename, contentType, data) {
   if (!contentType.startsWith('image/') || data.length === 0) {
     return null;
   }
@@ -59,7 +60,14 @@ function saveFile(fieldName, filename, contentType, data) {
   const filePath = path.join(UPLOAD_DIR, safeFilename);
 
   fs.writeFileSync(filePath, data);
-  return `/uploads/${safeFilename}`;
+  const localPath = `/uploads/${safeFilename}`;
+  let cloudinaryPath = null;
+  try {
+    cloudinaryPath = await uploadImageToCloudinary(data, safeFilename, contentType);
+  } catch {
+    cloudinaryPath = null;
+  }
+  return cloudinaryPath || localPath;
 }
 
 export default function upload(request, response, next) {
@@ -78,21 +86,21 @@ export default function upload(request, response, next) {
   const chunks = [];
 
   request.on('data', chunk => chunks.push(chunk));
-  request.on('end', () => {
+  request.on('end', async () => {
     const body = Buffer.concat(chunks).toString('latin1');
     const parts = body.split(`--${boundary}`);
     request.body = {};
     request.files = {};
 
-    parts.forEach(part => {
+    for (const part of parts) {
       if (!part || part === '--\r\n' || part === '--') {
-        return;
+        continue;
       }
 
       const cleanPart = part.replace(/^\r\n/, '').replace(/\r\n$/, '');
       const headerEndIndex = cleanPart.indexOf('\r\n\r\n');
       if (headerEndIndex === -1) {
-        return;
+        continue;
       }
 
       const headerText = cleanPart.slice(0, headerEndIndex);
@@ -102,12 +110,12 @@ export default function upload(request, response, next) {
       const fieldName = disposition.name;
 
       if (!fieldName) {
-        return;
+        continue;
       }
 
       if (disposition.filename) {
         const fileData = Buffer.from(rawValue, 'latin1');
-        const savedPath = saveFile(fieldName, disposition.filename, headers['content-type'] || '', fileData);
+        const savedPath = await saveFile(fieldName, disposition.filename, headers['content-type'] || '', fileData);
         if (savedPath) {
           request.files[fieldName] = {
             path: savedPath,
@@ -118,7 +126,7 @@ export default function upload(request, response, next) {
       } else {
         request.body[fieldName] = rawValue;
       }
-    });
+    }
 
     next();
   });
